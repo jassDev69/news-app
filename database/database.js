@@ -9,12 +9,12 @@ const pool = new Pool({
   port: 5432,
 });
 
-//hosted site
+// hosted site
 // const pool = new Pool({
-//   user: 'hmmhttvxjjtjoc',
-//   host: 'ec2-18-232-143-90.compute-1.amazonaws.com',
-//   database: 'd84kshiodli11c',
-//   password: '41fbd1d4417fac6fb83b37c0b5652fd571ea56cd803e1cc800cf0599d00a9154',
+//   user: 'bskovevyhftvjn',
+//   host: 'ec2-52-206-80-169.compute-1.amazonaws.com',
+//   database: 'db18v23j7aei',
+//   password: 'a55d317fb05a7629b2b257164602f09e4590700c08011f1f25730c16dba6da3b',
 //   port: 5432,
 // });
 
@@ -74,6 +74,38 @@ const loginUser = (request, response) => {
     response.status(400).json({status: 400, message: "User doesn't exist"})
   })
 }
+
+// fetching categories from DB
+const getAllCategories = (request, response) => {
+  pool.query('SELECT * FROM categories', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+
+//post users category
+const selectUsersCategory = (request, response) => {  
+  const query = {
+    text: 'INSERT INTO favCategoies(user_id,category_id)VALUES($1,$2)',
+    values: [request.body.question_text],
+  }
+  console.log(query);
+
+  pool.query(query, (error, results) => {
+    console.log(results);
+    if (error) {
+      throw error
+    }
+    else{
+      response.status(200).json({status: 200, message: 'Question Posted'});
+      response.end()
+    }
+  })
+}
+
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
   pool.query('DELETE FROM users WHERE id='+request.params.id, (error, results) => {
@@ -154,9 +186,11 @@ const submitQuestion = (request, response) => {
 module.exports = {
   // getAllQuestion,
   // deleteQuestion,
-  // createSignup,
+  createSignup,
+  selectUsersCategory,
   // loginUser,
   getAllUsers,
+  getAllCategories,
   // deleteUser,
   // getAllUserQuestion,
   // postQuestion,

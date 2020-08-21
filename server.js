@@ -20,6 +20,15 @@ app.get('/', function (req, res) {
 // api to get all the questions
 app.get('/api/admin/questions',db.getAllUsers);
 
+
+
+
+// api to create user using signup
+app.post('/api/user/signup',db.createSignup);
+app.get('/api/user/Categories',db.getAllCategories);
+app.get('/api/user/Users',db.getAllUsers);
+app.get('/api/user/selectCat',db.selectUsersCategory);
+
 // api to delete questions
 // app.delete('/api/admin/questions/:id',db.deleteQuestion);
 
