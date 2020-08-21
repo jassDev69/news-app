@@ -187,6 +187,7 @@ const submitQuestion = (request, response) => {
 module.exports = {
   // getAllQuestion,
   // deleteQuestion,
+  loginUser,
   createSignup,
   selectUsersCategory,
   // loginUser,
