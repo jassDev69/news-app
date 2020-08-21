@@ -90,8 +90,8 @@ const getAllCategories = (request, response) => {
 //post users category
 const selectUsersCategory = (request, response) => {  
   const query = {
-    text: 'INSERT INTO favCategoies(user_id,category_id)VALUES($1,$2)',
-    values: [request.body.user_id,request.body.cat_id],
+    text: 'UPDATE users SET categories=($1) WHERE id=($2)',
+    values: [request.body.categories,parseInt(request.body.user_id)],
   }
   console.log(query);
 
@@ -101,12 +101,30 @@ const selectUsersCategory = (request, response) => {
       throw error
     }
     else{
-      response.status(200).json({status: 200, message: 'Question Posted'});
+      response.status(200).json({status: 200, message: 'Thanks'});
       response.end()
     }
   })
 }
+//Post categories
+const postCategory = (request, response) => {  
+  const query = {
+    text: 'INSERT INTO categories(name)VALUES($1)',
+    values: [request.body.category_name],
+  }
+  console.log(query);
 
+  pool.query(query, (error, results) => {
+    console.log(results);
+    if (error) {
+      throw error
+    }
+    else{
+      response.status(200).json({status: 200, message: 'Category Posted'});
+      response.end()
+    }
+  })
+}
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
   pool.query('DELETE FROM users WHERE id='+request.params.id, (error, results) => {
@@ -190,6 +208,7 @@ module.exports = {
   loginUser,
   createSignup,
   selectUsersCategory,
+  postCategory,
   // loginUser,
   getAllUsers,
   getAllCategories,
