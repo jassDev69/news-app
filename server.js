@@ -24,10 +24,12 @@ app.get('/api/admin/questions',db.getAllUsers);
 
 
 // api to create user using signup
+
+app.post('/api/user/login',db.createSloginUserignup);
 app.post('/api/user/signup',db.createSignup);
 app.get('/api/user/categories',db.getAllCategories);
 app.get('/api/user/users',db.getAllUsers);
-app.get('/api/user/selectCat',db.selectUsersCategory);
+app.post('/api/user/selectCat',db.selectUsersCategory);
 
 // api to delete questions
 // app.delete('/api/admin/questions/:id',db.deleteQuestion);

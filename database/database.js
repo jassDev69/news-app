@@ -91,7 +91,7 @@ const getAllCategories = (request, response) => {
 const selectUsersCategory = (request, response) => {  
   const query = {
     text: 'INSERT INTO favCategoies(user_id,category_id)VALUES($1,$2)',
-    values: [request.body.question_text],
+    values: [request.body.user_id,request.body.cat_id],
   }
   console.log(query);
 
