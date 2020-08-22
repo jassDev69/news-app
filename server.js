@@ -30,9 +30,11 @@ app.post('/api/user/signup',db.createSignup);
 app.get('/api/user/categories',db.getAllCategories);
 app.get('/api/user/users',db.getAllUsers);
 app.post('/api/user/selectCat',db.selectUsersCategory);
+app.post('/api/user/usersDetails/:id',db.getUsersDetails);
 
 
 app.post('/api/admin/addCategory',db.postCategory);
+app.post('/api/admin/newsList',db.getAllNews);
 
 // api to delete questions
 // app.delete('/api/admin/questions/:id',db.deleteQuestion);

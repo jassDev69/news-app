@@ -29,6 +29,16 @@ const getAllUsers = (request, response) => {
   })
 }
 
+const getUsersDetails = (request, response) => {
+  pool.query('SELECT id, first_name,last_name,email_id FROM users where id='+request.params.id, (error, results) => {
+    if (error) {
+      console.log(error)
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 // Deleting record from question table in DB
 const deleteQuestion = (request, response) => {
   pool.query('DELETE FROM question WHERE id='+request.params.id, (error, results) => {
@@ -125,6 +135,26 @@ const postCategory = (request, response) => {
     }
   })
 }
+
+//get all news
+const getAllNews = (request, response) => {
+  if(request.body.category_id){
+    pool.query('SELECT * FROM news WHERE category_id='+request.body.category_id, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }else{
+    pool.query('SELECT * FROM news', (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+}
+
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
   pool.query('DELETE FROM users WHERE id='+request.params.id, (error, results) => {
@@ -164,7 +194,6 @@ const postQuestion = (request, response) => {
       console.log(query);
 
       pool.query(query, (error, results) => {
-        console.log(results);
         if (error) {
           throw error
         }
@@ -203,18 +232,12 @@ const submitQuestion = (request, response) => {
 
 
 module.exports = {
-  // getAllQuestion,
-  // deleteQuestion,
   loginUser,
   createSignup,
   selectUsersCategory,
   postCategory,
-  // loginUser,
   getAllUsers,
   getAllCategories,
-  // deleteUser,
-  // getAllUserQuestion,
-  // postQuestion,
-  // submitQuestion,
-  // userScores
+  getAllNews,
+  getUsersDetails
 }
