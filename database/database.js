@@ -20,7 +20,7 @@ const pool = new Pool({
 
 // fetching question data from DB
 const getAllUsers = (request, response) => {
-  pool.query('SELECT * FROM users', (error, results) => {
+  pool.query('SELECT id, first_name,last_name,email_id FROM users', (error, results) => {
     if (error) {
       console.log(error)
       throw error
