@@ -50,8 +50,8 @@ const deleteQuestion = (request, response) => {
 }
 //Sign up user
 const createSignup = (request, response) => {  
-  pool.query('SELECT * FROM users WHERE email_id=$1',[request.body.emailId], (error, results) => {
-        if(!results.rows.length){
+  pool.query('SELECT * FROM users WHERE email_id=$1',[request.body.emailId], (error, resultss) => {
+        if(!resultss.rows.length){
               const query = {
                 text: 'INSERT INTO users(first_name, last_name, email_id, password)VALUES($1, $2, $3, $4)',
                 values: [request.body.firstName,request.body.lastName?request.body.lastName:'',request.body.emailId,request.body.password],
@@ -61,7 +61,7 @@ const createSignup = (request, response) => {
                   throw error
                 }
                 else{
-                  response.status(200).json({status: 200,data : results.rows, message: 'You have successfully signed up'});
+                  response.status(200).json({status: 200,data : resultss.rows, message: 'You have successfully signed up'});
                   response.end()
                 }
               })
