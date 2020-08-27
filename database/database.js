@@ -78,7 +78,7 @@ const createSignup = (request, response) => {
 
 const loginUser = (request, response) => {
 
-  pool.query('SELECT id, first_name,last_name,email_id FROM users WHERE email_id=$1 AND password=$2',[request.body.email,request.body.password], (error, results) => {
+  pool.query('SELECT id, first_name,last_name,email_id,categories FROM users WHERE email_id=$1 AND password=$2',[request.body.email,request.body.password], (error, results) => {
     if (error) {
       throw error
     }
