@@ -111,7 +111,7 @@ const selectUsersCategory = (request, response) => {
       throw error
     }
     else{
-      pool.query('SELECT * FROM users WHERE id='+request.body.user_id, (error, results) => {
+      pool.query('SELECT SELECT id, first_name,last_name,email_id,categories FROM users WHERE id='+request.body.user_id, (error, results) => {
         if (error) {
           throw error
         }
