@@ -1,22 +1,22 @@
 const Pool = require('pg').Pool
 
 //local
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'news',
-//   password: 'admin321',
-//   port: 5432,
-// });
-
-// hosted site
 const pool = new Pool({
-  user: 'bskovevyhftvjn',
-  host: 'ec2-52-206-80-169.compute-1.amazonaws.com',
-  database: 'db18v23j7aei',
-  password: 'a55d317fb05a7629b2b257164602f09e4590700c08011f1f25730c16dba6da3b',
+  user: 'postgres',
+  host: 'localhost',
+  database: 'news',
+  password: 'admin321',
   port: 5432,
 });
+
+// hosted site
+// const pool = new Pool({
+//   user: 'bskovevyhftvjn',
+//   host: 'ec2-52-206-80-169.compute-1.amazonaws.com',
+//   database: 'db18v23j7aei',
+//   password: 'a55d317fb05a7629b2b257164602f09e4590700c08011f1f25730c16dba6da3b',
+//   port: 5432,
+// });
 
 // fetching question data from DB
 const getAllUsers = (request, response) => {
@@ -61,7 +61,7 @@ const createSignup = (request, response) => {
                   throw error
                 }
                 else{
-                  response.status(200).json({status: 200, message: 'You have successfully signed up'});
+                  response.status(200).json({status: 200,data : results.rows, message: 'You have successfully signed up'});
                   response.end()
                 }
               })
@@ -136,6 +136,25 @@ const postCategory = (request, response) => {
   })
 }
 
+
+//update categories
+const updateCategory = (request, response) => {  
+  const query = {
+    text: 'UPDATE categories SET name=($1) WHERE id=($2)',
+    values: [request.body.name,parseInt(request.body.id)],
+  }
+  console.log(query)
+  pool.query(query, (error, results) => {
+    console.log(results);
+    if (error) {
+      throw error
+    }
+    else{
+      response.status(200).json({status: 200, message: 'category updated'});
+      response.end()
+    }
+  })
+}
 //get all news
 const getAllNews = (request, response) => {
   if(request.body.category_id){
@@ -239,5 +258,6 @@ module.exports = {
   getAllUsers,
   getAllCategories,
   getAllNews,
-  getUsersDetails
+  getUsersDetails,
+  updateCategory
 }

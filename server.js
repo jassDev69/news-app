@@ -34,6 +34,7 @@ app.post('/api/user/usersDetails/:id',db.getUsersDetails);
 
 
 app.post('/api/admin/addCategory',db.postCategory);
+app.post('/api/admin/updateCategory',db.updateCategory);
 app.post('/api/admin/newsList',db.getAllNews);
 
 // api to delete questions
