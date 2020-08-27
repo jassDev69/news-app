@@ -103,16 +103,18 @@ const selectUsersCategory = (request, response) => {
     text: 'UPDATE users SET categories=($1) WHERE id=($2)',
     values: [request.body.categories,parseInt(request.body.user_id)],
   }
-  console.log(query);
-
   pool.query(query, (error, results) => {
-    console.log(results);
     if (error) {
       throw error
     }
     else{
-      response.status(200).json({status: 200, message: 'Thanks'});
-      response.end()
+      pool.query('SELECT * FROM users WHERE id='+request.body.user_id, (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).json({status: 200, message: 'Welcome',data : results.rows})
+        response.end()
+      })  
     }
   })
 }
@@ -155,8 +157,29 @@ const updateCategory = (request, response) => {
     }
   })
 }
+
+//update user
+const updateUser = (request, response) => {  
+  const query = {
+    text: 'UPDATE users SET first_name=($1),last_name=($2),email_id=($3),categories=($4) WHERE id=($5)',
+    values: [request.body.first_name,request.body.last_name,request.body.email_id,request.body.categories,parseInt(request.body.id)],
+  }
+  console.log(query)
+  pool.query(query, (error, results) => {
+    console.log(results);
+    if (error) {
+      throw error
+    }
+    else{
+      response.status(200).json({status: 200, message: 'Profile updated'});
+      response.end()
+    }
+  })
+}
+
+
 //get all news
-const getAllNews = (request, response) => {
+const getNewsByCategory = (request, response) => {
   if(request.body.category_id){
     pool.query('SELECT * FROM news WHERE category_id='+request.body.category_id, (error, results) => {
       if (error) {
@@ -173,7 +196,15 @@ const getAllNews = (request, response) => {
     })
   }
 }
-
+//get all news
+const getAllNews = (request, response) => {
+    pool.query('SELECT * FROM news  LIMIT '+request.body.limit+ 'OFFSET '+request.body.offset, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
   pool.query('DELETE FROM users WHERE id='+request.params.id, (error, results) => {
@@ -257,7 +288,10 @@ module.exports = {
   postCategory,
   getAllUsers,
   getAllCategories,
-  getAllNews,
+  getNewsByCategory,
   getUsersDetails,
-  updateCategory
+  updateCategory,
+  deleteUser,
+  updateUser,
+  getAllNews
 }
