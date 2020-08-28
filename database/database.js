@@ -140,7 +140,25 @@ const postCategory = (request, response) => {
     }
   })
 }
+// add news
+const postNews = (request, response) => {  
+  const query = {
+    text: 'INSERT INTO news(title, title_desc, description, category_id, img)VALUES($1, $2, $3, $4,$5)',
+    values: [request.body.title,request.body.title_desc,request.body.description,request.body.category_id,request.body.newsImg],
+  }
+  console.log(query);
 
+  pool.query(query, (error, results) => {
+    console.log(results);
+    if (error) {
+      throw error
+    }
+    else{
+      response.status(200).json({status: 200, message: 'News Posted'});
+      response.end()
+    }
+  })
+}
 
 //update categories
 const updateCategory = (request, response) => {  
@@ -184,14 +202,14 @@ const updateUser = (request, response) => {
 //get all news
 const getNewsByCategory = (request, response) => {
   if(request.body.category_id){
-    pool.query('SELECT * FROM news WHERE category_id='+request.body.category_id, (error, results) => {
+    pool.query('SELECT n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id WHERE category_id='+request.body.category_id, (error, results) => {
       if (error) {
         throw error
       }
       response.status(200).json(results.rows)
     })
   }else{
-    pool.query('SELECT * FROM news', (error, results) => {
+    pool.query('SELECT n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id', (error, results) => {
       if (error) {
         throw error
       }
@@ -208,6 +226,17 @@ const getAllNews = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
+  // const upload = (req, res,err) => {
+  //         if (err instanceof multer.MulterError) {
+  //             return res.status(500).json(err)
+  //         } else if (err) {
+  //             return res.status(500).json(err)
+  //         }
+  //   return res.status(200).send(req.file)
+
+
+  // }
+  
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
   pool.query('DELETE FROM users WHERE id='+request.params.id, (error, results) => {
@@ -296,5 +325,6 @@ module.exports = {
   updateCategory,
   deleteUser,
   updateUser,
-  getAllNews
+  getAllNews,
+  postNews
 }
