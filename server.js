@@ -53,7 +53,7 @@ app.post('/api/admin/postNews',db.postNews);
 app.post('/api/admin/deleteUser/:id',db.deleteUser);
 
 //file upload
-app.post('api/admin/fileUpload', (req, res) => {
+app.post('/api/admin/fileUpload', (req, res) => {
   if (req.files === null) {
     return res.status(400).json({ msg: 'No file uploaded' });
   }

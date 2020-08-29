@@ -1,22 +1,22 @@
 const Pool = require('pg').Pool
 
 //local
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'news',
-//   password: 'admin321',
-//   port: 5432,
-// });
-
-// hosted site
 const pool = new Pool({
-  user: 'bskovevyhftvjn',
-  host: 'ec2-52-206-80-169.compute-1.amazonaws.com',
-  database: 'db18v23j7aei',
-  password: 'a55d317fb05a7629b2b257164602f09e4590700c08011f1f25730c16dba6da3b',
+  user: 'postgres',
+  host: 'localhost',
+  database: 'news',
+  password: 'admin321',
   port: 5432,
 });
+
+// hosted site
+// const pool = new Pool({
+//   user: 'bskovevyhftvjn',
+//   host: 'ec2-52-206-80-169.compute-1.amazonaws.com',
+//   database: 'db18v23j7aei',
+//   password: 'a55d317fb05a7629b2b257164602f09e4590700c08011f1f25730c16dba6da3b',
+//   port: 5432,
+// });
 
 // fetching question data from DB
 const getAllUsers = (request, response) => {
@@ -106,6 +106,7 @@ const selectUsersCategory = (request, response) => {
     text: 'UPDATE users SET categories=($1) WHERE id=($2)',
     values: [request.body.categories,parseInt(request.body.user_id)],
   }
+  console.log(query)
   pool.query(query, (error, results) => {
     if (error) {
       throw error
