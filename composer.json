@@ -1,9 +1,0 @@
-{
-    "scripts": {
-      "compile": [
-        "chmod -R 777 upload/",
-        "chmod 755 etc/",
-        "chmod 644 etc/config.php"
-      ]
-    }
-  }
