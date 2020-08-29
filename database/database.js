@@ -203,14 +203,14 @@ const updateUser = (request, response) => {
 //get all news
 const getNewsByCategory = (request, response) => {
   if(request.body.category_id){
-    pool.query('SELECT n.id n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id WHERE category_id='+request.body.category_id, (error, results) => {
+    pool.query('SELECT n.id,n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id WHERE category_id='+request.body.category_id, (error, results) => {
       if (error) {
         throw error
       }
       response.status(200).json(results.rows)
     })
   }else{
-    pool.query('SELECT n.id n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id', (error, results) => {
+    pool.query('SELECT n.id, n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id', (error, results) => {
       if (error) {
         throw error
       }
