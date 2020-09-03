@@ -292,7 +292,7 @@ const postQuestion = (request, response) => {
         text: 'INSERT INTO question(question_text, options, correct_option)VALUES($1, $2, $3)',
         values: [request.body.question_text,request.body.options,request.body.correct_option],
       }
-      console.log(query);
+      // console.log(query);
 
       pool.query(query, (error, results) => {
         if (error) {
@@ -310,7 +310,14 @@ const newsDetails = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).json({status: 200, message: 'Details',data : results.rows})
+      pool.query('SELECT n.id,n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id', (error, allresult) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).json({status: 200, message: 'Details',data : results.rows,recent : allresult.rows})
+        response.end()
+      })  
+
     })  
 }
 //submit question
