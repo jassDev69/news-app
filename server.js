@@ -56,6 +56,8 @@ app.post('/api/admin/newsListByCategory',db.getNewsByCategory);
 app.post('/api/admin/newsList',db.getAllNews);
 app.post('/api/admin/postNews',db.postNews);
 app.post('/api/admin/deleteUser/:id',db.deleteUser);
+app.post('/api/admin/deleteNews/:id',db.deleteUser);
+app.post('/api/admin/deleteCat/:id',db.deleteUser);
 
 
 //file upload

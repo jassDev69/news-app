@@ -247,6 +247,24 @@ const deleteUser = (request, response) => {
     response.status(200).json('User deleted')
   })
 }
+// Deleting news
+const deleteNews = (request, response) => {
+  pool.query('DELETE FROM news WHERE id='+request.params.id, (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json('News deleted')
+  })
+}
+//delete category
+const deleteCat = (request, response) => {
+  pool.query('DELETE FROM categories WHERE id='+request.params.id, (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json('Category deleted')
+  })
+}
 // fetching question data from DB
 const getAllUserQuestion = (request, response) => {
   pool.query('SELECT id,question_text,options FROM question', (error, results) => {
@@ -333,6 +351,8 @@ module.exports = {
   getUsersDetails,
   updateCategory,
   deleteUser,
+  deleteNews,
+  deleteCat,
   updateUser,
   getAllNews,
   postNews,
