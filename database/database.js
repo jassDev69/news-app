@@ -286,7 +286,15 @@ const postQuestion = (request, response) => {
         }
       })
 }
-
+//New details
+const newsDetails = (request, response) => {
+    pool.query('SELECT n.id,n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id WHERE n.id='+request.body.id, (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })  
+}
 //submit question
 const submitQuestion = (request, response) => {  
   pool.query('SELECT * FROM question WHERE id=$1',[request.body.selectedID], (error, results) => {
@@ -327,5 +335,6 @@ module.exports = {
   deleteUser,
   updateUser,
   getAllNews,
-  postNews
+  postNews,
+  newsDetails
 }
