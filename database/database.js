@@ -310,7 +310,7 @@ const newsDetails = (request, response) => {
       if (error) {
         throw error
       }
-      pool.query('SELECT n.id,n.title,n.title_desc,n.description,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id', (error, allresult) => {
+      pool.query('SELECT n.id,n.title,n.img,n.created_at,c.name AS category_name FROM news AS n INNER JOIN categories AS c ON n.category_id = c.id LIMIT=3', (error, allresult) => {
         if (error) {
           throw error
         }
