@@ -48,7 +48,7 @@ app.get('/api/user/users',db.getAllUsers);
 app.post('/api/user/selectCat',db.selectUsersCategory);
 app.post('/api/user/usersDetails/:id',db.getUsersDetails);
 app.post('/api/user/updateUser/',db.updateUser);
-
+app.post('/api/user/newsDetails/',db.newsDetails);
 
 app.post('/api/admin/addCategory',db.postCategory);
 app.post('/api/admin/updateCategory',db.updateCategory);
@@ -56,7 +56,7 @@ app.post('/api/admin/newsListByCategory',db.getNewsByCategory);
 app.post('/api/admin/newsList',db.getAllNews);
 app.post('/api/admin/postNews',db.postNews);
 app.post('/api/admin/deleteUser/:id',db.deleteUser);
-app.post('/api/admin/newsDetails/',db.newsDetails);
+
 
 //file upload
 app.post('/api/admin/fileUpload', (req, res) => {
