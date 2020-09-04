@@ -209,8 +209,6 @@ const updateUser = (request, response) => {
           response.status(400).json({status: 400, message: ""})
         }        
       })
-      response.status(200).json({status: 200, message: 'Profile updated'});
-      response.end()
     }
   })
 }
