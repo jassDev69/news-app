@@ -227,16 +227,6 @@ const getAllNews = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
-  // const upload = (req, res,err) => {
-  //         if (err instanceof multer.MulterError) {
-  //             return res.status(500).json(err)
-  //         } else if (err) {
-  //             return res.status(500).json(err)
-  //         }
-  //   return res.status(200).send(req.file)
-
-
-  // }
   
 // Deleting record from user table in DB
 const deleteUser = (request, response) => {
