@@ -193,6 +193,22 @@ const updateUser = (request, response) => {
       throw error
     }
     else{
+      pool.query('SELECT id, first_name,last_name,email_id,categories FROM users WHERE email_id=$1 AND password=$2',[request.body.email,request.body.password], (error, resultsNew) => {
+        if (error) {
+          throw error
+        }
+        if(resultsNew.rows.length){
+          response.status(200).json({status: 200, message: 'Profile updated',data : resultsNew.rows})
+          response.end()
+        }
+        
+        else{
+          response.status(400).json({status: 400, message: ""})
+        }
+        
+      })
+
+
       response.status(200).json({status: 200, message: 'Profile updated'});
       response.end()
     }
